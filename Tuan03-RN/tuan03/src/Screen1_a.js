@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const Screen1_a = () => {
   return (
     <LinearGradient
-      colors={['#C7F4F6', '#D1F4F6', '#E5F4F5', '#37D6F8', '#00CCF9']}
+    colors={['#C7F4F6', '#D1F4F6', '#E5F4F5', '#00CCF9']}
       style={{
         flex: 1,
         alignItems: 'center',
