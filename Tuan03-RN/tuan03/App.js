@@ -5,6 +5,7 @@ import Screen1_b from './src/Screen1_b';
 import Screen1_c from './src/Screen1_c';
 import Screen1_d from './src/Screen1_d';
 import Screen1_e from './src/Screen1_e';
+import Screen2_a from './src/Screen2_a';
 
 const App = () => {
   // return <FirstScreen />;
@@ -12,7 +13,8 @@ const App = () => {
   // return <Screen1_b />;
   // return <Screen1_c />;
   // return <Screen1_d />;
-  return <Screen1_e />;
+  // return <Screen1_e />;
+  return <Screen2_a />;
 
 }
 
