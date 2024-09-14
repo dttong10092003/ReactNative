@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ForgetPasswordScreen = () => {
   return (
@@ -21,11 +22,7 @@ const ForgetPasswordScreen = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Image     // Lý do chạy bằng cái này không add Ảnh từ máy lên chỉ được sài link      
-          source={{uri:'https://e7.pngegg.com/pngimages/467/409/png-clipart-computer-icons-computer-software-padlock-my-account-icon-brand-security-thumbnail.png',}} 
-          style={{ width: 100, height: 100 }} 
-          
-        />
+        <Icon name="lock" size={100} color="black"/>
       </View>
 
       <Text
@@ -34,18 +31,9 @@ const ForgetPasswordScreen = () => {
           fontWeight: 'bold',
           color: 'black',
           textAlign: 'center',
-        }}>
-        FORGET
-      </Text>
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: 'bold',
           marginBottom: 40,
-          color: 'black',
-          textAlign: 'center',
         }}>
-        PASSWORD
+        FORGET {'\n'} PASSWORD
       </Text>
 
       <Text
