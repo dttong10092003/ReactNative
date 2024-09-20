@@ -21,7 +21,7 @@ function HomeScreen({ navigation }) {
         </View>
         <TouchableOpacity 
           style={styles.chooseColorButton}
-        //   onPress={() => navigation.navigate('ColorSelection')}
+          onPress={() => navigation.navigate('ColorSelection')}
         >
           <Text style={styles.chooseColorText}>4 MÀU - CHỌN MÀU</Text>          
         </TouchableOpacity>
