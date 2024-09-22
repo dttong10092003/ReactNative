@@ -1,21 +1,75 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function ColorSelectionScreen({ navigation }) {
+function ColorSelectionScreen({ navigation, route }) {
+  const selectedProduct = route.params?.selectedProduct || {
+    name: 'Điện Thoại Vsmart Joy 3',
+    price: 1790000,
+    supplierName: 'Tiki Trading',
+    color: 'Xanh dương',
+    image: require('../assets/vs_blue.png')
+  };
+
+  const products = [
+    {
+      name: 'Điện Thoại Vsmart Joy 3',
+      price: 1790000,
+      supplierName: 'Tiki Trading',
+      color: 'Xanh dương',
+      image: require('../assets/vs_blue.png')
+    },
+    {
+      name: 'Điện Thoại Vsmart Joy 3',
+      price: 1890000,
+      supplierName: 'Tiki Trading',
+      color: 'Đỏ',
+      image: require('../assets/vs_red.png')
+    },
+    {
+      name: 'Điện Thoại Vsmart Joy 3',
+      price: 1990000,
+      supplierName: 'Tiki Trading',
+      color: 'Đen',
+      image: require('../assets/vs_black.png')
+    },
+    {
+      name: 'Điện Thoại Vsmart Joy 3',
+      price: 1690000,
+      supplierName: 'Tiki Trading',
+      color: 'Bạc',
+      image: require('../assets/vs_silver.png')
+    }
+  ];
+
+  const selectColor = (product) => {
+    navigation.navigate('Home', { selectedProduct: product });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.productInfo}>
-        <Image source={require('../assets/vs_blue.png')} style={styles.productImage} />
-        <Text style={styles.productName}>Điện Thoại Vsmart Joy 3 {'\n'} Hàng chính hãng</Text>
+        <Image source={selectedProduct.image} style={styles.productImage} />
+        <Text style={styles.productName}>{selectedProduct.name} 
+          {'\n'} 
+          Hàng chính hãng 
+          {'\n'}
+          Màu: {selectedProduct.color} {'\n'}
+          Giá: {selectedProduct.price.toLocaleString('vi-VN')} đ {'\n'}
+          Cung cấp bởi {selectedProduct.supplierName}
+        </Text>
       </View>
 
       <View style={styles.colorBox}>
         <Text style={styles.title}>Chọn một màu bên dưới:</Text>
         <View style={styles.colorOptions}>
-          <TouchableOpacity style={[styles.colorOption, { backgroundColor: '#c5f1fb' }]} />
-          <TouchableOpacity style={[styles.colorOption, { backgroundColor: '#f30d0d' }]} />
-          <TouchableOpacity style={[styles.colorOption, { backgroundColor: '#000000' }]} />
-          <TouchableOpacity style={[styles.colorOption, { backgroundColor: '#234896' }]} />
+          {products.map((product, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.colorOption, { backgroundColor: product.color === 'Xanh dương' ? '#c5f1fb' : product.color === 'Đỏ' ? '#f30d0d' : product.color === 'Đen' ? '#000000' : '#ffffff' }]}
+              onPress={() => selectColor(product)}
+            />
+          ))}
         </View>
         <TouchableOpacity 
           style={styles.doneButton}
@@ -79,3 +133,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default ColorSelectionScreen;

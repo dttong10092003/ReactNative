@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, route }) {
+  const defaultProduct = {
+    name: 'Điện Thoại Vsmart Joy 3',
+    price: 1790000,
+    supplierName: 'Tiki Trading',
+    color: 'Xanh dương',
+    image: require('../assets/vs_blue.png')
+  };
+
+  const [selectedProduct, setSelectedProduct] = useState(defaultProduct);
+
+  useEffect(() => {
+    if (route.params?.selectedProduct) {
+      setSelectedProduct(route.params.selectedProduct);
+    }
+  }, [route.params?.selectedProduct]);
+
   return (
     <View style={styles.container}>
-        <Image source={require('../assets/vs_blue.png')} style={styles.productImage} />
-        <Text style={styles.productName}>Điện Thoại Vsmart Joy 3 - Hàng chính hãng</Text>
+        <Image source={selectedProduct.image} style={styles.productImage} />
+        <Text style={styles.productName}>{selectedProduct.name} - Hàng chính hãng</Text>
         <View style={styles.ratingContainer}>
             <Text style={styles.rating}>⭐ ⭐ ⭐ ⭐ ⭐</Text>
             <Text style={styles.reviews}>(Xem 828 đánh giá)</Text>
         </View>
         <View style={styles.priceContainer}>
-            <Text style={styles.currentPrice}>1.790.000 đ</Text>
-            <Text style={styles.oldPrice}>1.790.000 đ</Text>
+            <Text style={styles.currentPrice}>{selectedProduct.price.toLocaleString('vi-VN')} đ</Text>
+            <Text style={styles.oldPrice}>{selectedProduct.price.toLocaleString('vi-VN')} đ</Text>
         </View>
         <View style={styles.redTextContainer}>
           <Text style={styles.redText}>Ở ĐÂU RẺ HƠN HOÀN TIỀN</Text>
@@ -21,7 +37,7 @@ function HomeScreen({ navigation }) {
         </View>
         <TouchableOpacity 
           style={styles.chooseColorButton}
-          onPress={() => navigation.navigate('ColorSelection')}
+          onPress={() => navigation.navigate('ColorSelection', { selectedProduct })}
         >
           <Text style={styles.chooseColorText}>4 MÀU - CHỌN MÀU</Text>          
         </TouchableOpacity>
