@@ -1,9 +1,9 @@
 import React from 'react';
-import ProductListScreen from './src/ProductListScreen';
+import ProductListScreen2 from './src/ProductListScreen2';
 
 function App() {
   return (
-    <ProductListScreen />
+    <ProductListScreen2 />
   );
 }
 
