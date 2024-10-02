@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getJobs, deleteJob, updateJob, addJob } from '../api';
 
 const Screen03 = ({ route, navigation }) => {
   const job = route.params?.job;
   const [jobTitle, setJobTitle] = useState(job ? job.title : '');
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     if (job) {
+      const updatedJob = { id: job.id, title: jobTitle };
+      await updateJob(updatedJob); 
       navigation.navigate('Screen02', {
-        newJob: { id: job.id, title: jobTitle },
+        newJob: updatedJob,
       });
     } else {
       const newJob = {
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 1000), 
         title: jobTitle,
       };
-      navigation.navigate('Screen02', { addedJob: newJob });
+      const addedJob = await addJob(newJob); 
+      navigation.navigate('Screen02', { addedJob });
     }
   };
 

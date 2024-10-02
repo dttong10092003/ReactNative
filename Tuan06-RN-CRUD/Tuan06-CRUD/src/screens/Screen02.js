@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import jobsData from '../data/jobsData';
+// import jobsData from '../data/jobsData'; // Dữ liệu cứng
 import { useFocusEffect } from '@react-navigation/native';
+import { getJobs, deleteJob, updateJob, addJob } from '../api'; // Sử dụng API
+
 
 const Screen02 = ({ navigation, route }) => {
-  const [jobs, setJobs] = useState(jobsData);
+  // const [jobs, setJobs] = useState(jobsData); // Có dữ liệu cứng
+  const [jobs, setJobs] = useState([]); // Tạo mảng rỗng chờ API trả về
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        const fetchedJobs = await getJobs(); // Gọi API 
+        setJobs(fetchedJobs);
+      } catch (error) {
+        console.error("Error fetching jobs: ", error);
+      }
+    };
+
+    loadJobs();
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -16,14 +32,19 @@ const Screen02 = ({ navigation, route }) => {
         );
         setJobs(updatedJobs);
       } else if (route.params?.addedJob) {
-        setJobs([...jobs, route.params.addedJob]);
+        setJobs(prevJobs => [...prevJobs, route.params.addedJob]);
       }
     }, [route.params])
   );
 
-  const handleDeleteJob = (id) => {
-    const filteredJobs = jobs.filter(job => job.id !== id);
-    setJobs(filteredJobs);
+  const handleDeleteJob = async (id) => {
+    try{
+      await deleteJob(id);
+      const filteredJobs = jobs.filter(job => job.id !== id);
+      setJobs(filteredJobs);
+    }catch(error){
+      console.error("Error deleting job: ", error);
+    }
   };
 
   const handleNavigateToScreen03 = (item) => {
