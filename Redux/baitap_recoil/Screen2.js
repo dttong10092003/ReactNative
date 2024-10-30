@@ -1,20 +1,43 @@
 // Screen2.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { jobsState, loadingState, errorState, fetchJobsSelector, deleteJobSelector } from './atoms';
+import axios from 'axios';
+import { jobsState, loadingState, errorState } from './atoms';
+
+const API_URL = 'https://671341686c5f5ced6625d06c.mockapi.io/api/todo';
 
 const Screen2 = ({ navigation, route }) => {
   const { name } = route.params;
-  const [searchQuery, setSearchQuery] = useState(''); // Thêm trạng thái searchQuery
-  const jobs = useRecoilValue(fetchJobsSelector); // Lấy dữ liệu từ selector `fetchJobsSelector`
-  const loading = useRecoilValue(loadingState);
-  const error = useRecoilValue(errorState);
-  const deleteJob = useSetRecoilState(deleteJobSelector);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [jobs, setJobs] = useRecoilState(jobsState);
+  const [loading, setLoading] = useRecoilState(loadingState);
+  const [error, setError] = useRecoilState(errorState);
 
-  const handleDeleteJob = (id) => {
-    deleteJob(id); // Xóa công việc
+  // Gọi API để lấy dữ liệu công việc
+  useEffect(() => {
+    const fetchJobs = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(API_URL);
+        setJobs(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, [setJobs, setLoading, setError]);
+
+  const handleDeleteJob = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handleAddJob = () => {
