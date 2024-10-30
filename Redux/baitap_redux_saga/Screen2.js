@@ -1,3 +1,4 @@
+// Screen1.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,11 +20,11 @@ const Screen2 = ({ navigation, route }) => {
   };
 
   const handleAddJob = () => {
-    navigation.navigate('API_Screen_03', { job: null, name });
+    navigation.navigate('Screen3', { job: null, name });
   };
 
   const handleEditJob = (job) => {
-    navigation.navigate('API_Screen_03', { job, name });
+    navigation.navigate('Screen3', { job, name });
   };
 
   const renderJobItem = ({ item }) => (
