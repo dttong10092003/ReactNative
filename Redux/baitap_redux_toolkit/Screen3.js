@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch } from 'react-redux';
-import { addJobRequest, editJobRequest } from './jobSlice';
+import { addJob, editJob } from './jobSlice';
 
 const Screen3 = ({ navigation, route }) => {
   const { job, name } = route.params;
@@ -12,9 +12,9 @@ const Screen3 = ({ navigation, route }) => {
 
   const handleSave = () => {
     if (job) {
-      dispatch(editJobRequest({ ...job, title }));
+      dispatch(editJob({ ...job, title }));
     } else {
-      dispatch(addJobRequest({ title }));
+      dispatch(addJob({ title }));
     }
     navigation.goBack();
   };

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { fetchJobsRequest, deleteJobRequest } from './jobSlice';
+import { fetchJobs, deleteJob } from './jobSlice';
 
 const Screen2 = ({ navigation, route }) => {
   const { name } = route.params;
@@ -13,11 +13,11 @@ const Screen2 = ({ navigation, route }) => {
   const { jobs, loading, error } = useSelector((state) => state.job);
 
   useEffect(() => {
-    dispatch(fetchJobsRequest());
+    dispatch(fetchJobs());
   }, [dispatch]);
 
   const handleDeleteJob = (id) => {
-    dispatch(deleteJobRequest(id));
+    dispatch(deleteJob(id));
   };
 
   const handleAddJob = () => {
@@ -79,12 +79,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   input: {
-    padding: 10,
+    padding: 12,
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 10,
     marginBottom: 20,
     backgroundColor: '#fff',
+    fontSize: 16,
   },
   jobItem: {
     flexDirection: 'row',
@@ -103,13 +104,14 @@ const styles = StyleSheet.create({
   jobText: {
     fontSize: 16,
     color: '#333',
+    fontWeight: '500',
   },
   actionButtons: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   editButton: {
-    marginRight: 10,
+    marginRight: 15,
   },
   deleteButton: {},
   addButton: {
